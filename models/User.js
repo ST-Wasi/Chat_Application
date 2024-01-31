@@ -5,28 +5,47 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
   },
-  chatHistory: [
+  user: [
     {
-      withUser: {
+      chatWith: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
+        ref: "User"
       },
-      messages: [
+      chat: [
         {
-          sender: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-            required: true,
-          },
-          message: { type: String, required: true },
-          timestamp: { type: Date, default: Date.now },
-        },
-      ],
-    },
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Chat"
+        }
+      ]
+    }
   ],
+  // chatHistory: [
+  //   {
+  //     withUser: {
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       ref: "User",
+  //       required: true,
+  //     },
+  //     messages: [
+  //       {
+  //         sender: {
+  //           type: mongoose.Schema.Types.ObjectId,
+  //           ref: "User",
+  //           required: true,
+  //         },
+  //         message: { type: String, required: true },
+  //         timestamp: { type: Date, default: Date.now },
+  //       },
+  //     ],
+  //   },
+  // ],
+
+  //  
+
   resetPasswordToken: String,
   resetPasswordExpires: String,
+},{
+  timestamps: true
 });
 userSchema.plugin(passportLocalMongoose);
 const User = mongoose.model("User", userSchema);
